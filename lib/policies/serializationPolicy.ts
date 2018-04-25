@@ -9,6 +9,7 @@ import { PropertyPath } from "../serialization/propertyPath";
 import { SerializationOptions } from "../serialization/serializationOptions";
 import { TypeSpec } from "../serialization/typeSpec";
 import { InMemoryHttpResponse } from "../inMemoryHttpResponse";
+import { ResponseBodySpecs } from "../msRest";
 
 const defaultSerializationOptions: SerializationOptions = {
   serializationStrictTypeChecking: true,
@@ -43,13 +44,22 @@ class SerializationPolicy extends BaseRequestPolicy {
 
     let response: HttpResponse = await this._nextPolicy.send(request);
 
-    const responseBodySpec: TypeSpec<any, any> | undefined = request.operationSpec && request.operationSpec.responseBodySpec;
-    if (responseBodySpec) {
-      const responseTextBody: string | undefined = await response.textBody();
-      const responseBody: any = responseTextBody == undefined ? undefined : JSON.parse(responseTextBody);
-      const responseDeserializedBody: any = responseBodySpec.deserialize(new PropertyPath([]), responseBody, this._serializationOptions);
+    const responseBodySpecs: ResponseBodySpecs | undefined = request.operationSpec && request.operationSpec.responseBodySpecs;
+    if (responseBodySpecs) {
+      let responseBodySpec: TypeSpec<any, any> | null | undefined = responseBodySpecs[response.statusCode.toString()] || responseBodySpecs.default;
+      // If there is no responseBodySpec for the response's status code (notice three equals signs
+      // instead of just two), then use the default responseBodySpec.
+      if (responseBodySpec === undefined) {
+        responseBodySpec = responseBodySpecs.default;
+      }
 
-      response = new InMemoryHttpResponse(response.request, response.statusCode, response.headers, responseTextBody, responseDeserializedBody);
+      if (responseBodySpec) {
+        const responseTextBody: string | undefined = await response.textBody();
+        const responseBody: any = responseTextBody == undefined ? undefined : JSON.parse(responseTextBody);
+        const responseDeserializedBody: any = responseBodySpec.deserialize(new PropertyPath([]), responseBody, this._serializationOptions);
+
+        response = new InMemoryHttpResponse(response.request, response.statusCode, response.headers, responseTextBody, responseDeserializedBody);
+      }
     }
 
     return response;

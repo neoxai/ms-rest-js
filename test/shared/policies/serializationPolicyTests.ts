@@ -31,7 +31,7 @@ describe("serializationPolicy", () => {
 
     const request = new HttpRequest({
       method: HttpMethod.GET,
-      url: "https://spam.com",
+      url: "https://spam.com/my/operation/path",
       headers: {
         "1": "one",
         "2": "2"
@@ -46,6 +46,7 @@ describe("serializationPolicy", () => {
       },
       operationSpec: {
         requestHttpMethod: HttpMethod.GET,
+        requestUrlPath: "my/operation/path",
         requestBodySpec: compositeSpec({
           typeName: "FakeRequestBody",
           propertySpecs: {
@@ -75,35 +76,37 @@ describe("serializationPolicy", () => {
             }
           }
         }),
-        responseBodySpec: compositeSpec({
-          typeName: "FakeResponseBody",
-          propertySpecs: {
-            "booleanProperty": {
-              required: true,
-              valueSpec: booleanSpec
-            },
-            "numberProperty": {
-              required: true,
-              valueSpec: numberSpec
-            },
-            "objectProperty": {
-              required: true,
-              valueSpec: objectSpec
-            },
-            "sequenceProperty": {
-              required: true,
-              valueSpec: sequenceSpec(booleanSpec)
-            },
-            "dateProperty": {
-              required: true,
-              valueSpec: dateSpec
-            },
-            "dateTimeRfc1123Property": {
-              required: true,
-              valueSpec: dateTimeRfc1123Spec
+        responseBodySpecs: {
+          "200": compositeSpec({
+            typeName: "FakeResponseBody",
+            propertySpecs: {
+              "booleanProperty": {
+                required: true,
+                valueSpec: booleanSpec
+              },
+              "numberProperty": {
+                required: true,
+                valueSpec: numberSpec
+              },
+              "objectProperty": {
+                required: true,
+                valueSpec: objectSpec
+              },
+              "sequenceProperty": {
+                required: true,
+                valueSpec: sequenceSpec(booleanSpec)
+              },
+              "dateProperty": {
+                required: true,
+                valueSpec: dateSpec
+              },
+              "dateTimeRfc1123Property": {
+                required: true,
+                valueSpec: dateTimeRfc1123Spec
+              }
             }
-          }
-        })
+          })
+        }
       }
     });
 

@@ -3,6 +3,7 @@
 import { DefaultHttpPipelineOptions, HttpPipeline, createDefaultHttpPipeline } from "./httpPipeline";
 import { HttpRequest } from "./httpRequest";
 import { HttpResponse } from "./httpResponse";
+import { Operation } from "./operation";
 
 /**
  * An abstract type that encapsulates a HttpPipeline for derived ServiceClient types.
@@ -33,5 +34,17 @@ export abstract class ServiceClient {
    */
   async sendRequest(request: HttpRequest): Promise<HttpResponse> {
     return await this._httpPipeline.send(request);
+  }
+
+  /**
+   * Convert the provided operation into a HttpRequest and then send the HttpThrough this
+   * ServiceClient's HTTP pipeline.
+   * @param operation The Operation to convert into an HttpRequest.
+   */
+  async sendOperation(operation: Operation): Promise<HttpResponse> {
+    if (operation) {
+      throw new Error("Not Yet Implemented");
+    }
+    throw new Error("Not Yet Implemented");
   }
 }

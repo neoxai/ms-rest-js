@@ -19,6 +19,8 @@ import { HttpPipelineOptions } from "./httpPipelineOptions";
 import { HttpRequest } from "./httpRequest";
 import { HttpResponse } from "./httpResponse";
 import { InMemoryHttpResponse } from "./inMemoryHttpResponse";
+import { OperationSpec, ResponseBodySpecs } from "./operationSpec";
+import { RequestOptionsBase } from "./requestOptionsBase";
 
 // Request Policies
 import { exponentialRetryPolicy } from "./policies/exponentialRetryPolicy";
@@ -47,7 +49,7 @@ import numberSpec from "./serialization/numberSpec";
 import objectSpec from "./serialization/objectSpec";
 import { PropertyPath } from "./serialization/propertyPath";
 import { sequenceSpec, SequenceTypeSpec } from "./serialization/sequenceSpec";
-import { SerializationOptions } from "./serialization/serializationOptions";
+import { SerializationOptions, SerializationOutputType } from "./serialization/serializationOptions";
 import streamSpec from "./serialization/streamSpec";
 import stringSpec from "./serialization/stringSpec";
 import timeSpanSpec from "./serialization/timeSpanSpec";
@@ -56,7 +58,7 @@ import unixTimeSpec from "./serialization/unixTimeSpec";
 import uuidSpec from "./serialization/uuidSpec";
 
 // Legacy
-import { WebResource, RequestPrepareOptions, HttpMethods, ParameterValue, RequestOptionsBase } from "./webResource";
+import { WebResource, RequestPrepareOptions, HttpMethods, ParameterValue } from "./webResource";
 import { HttpOperationResponse } from "./httpOperationResponse";
 import { RestError } from "./restError";
 import { ServiceClient } from "./serviceClient";
@@ -89,7 +91,8 @@ export {
   // HTTP Pipeline
   FetchHttpClient, HttpClient, HttpHeaders, HttpHeader, RawHttpHeaders, HttpMethod,
   HttpPipeline, DefaultHttpPipelineOptions, HttpPipelineLogger, HttpPipelineLogLevel,
-  HttpPipelineOptions, HttpRequest, HttpResponse, InMemoryHttpResponse,
+  HttpPipelineOptions, HttpRequest, HttpResponse, InMemoryHttpResponse, OperationSpec,
+  RequestOptionsBase, ResponseBodySpecs,
 
   // Request Policies
   RequestPolicy, RequestPolicyFactory, RequestPolicyOptions, exponentialRetryPolicy, logPolicy,
@@ -100,7 +103,7 @@ export {
   base64UrlSpec, booleanSpec, byteArraySpec, compositeSpec, CompositeType, CompositeTypeSpec,
   dateSpec, dateTimeRfc1123Spec, dateTimeSpec, dictionarySpec, DictionaryType, DictionaryTypeSpec,
   enumSpec, EnumTypeSpec, numberSpec, objectSpec, PropertyPath, sequenceSpec, SequenceTypeSpec,
-  SerializationOptions, streamSpec, stringSpec, timeSpanSpec, TypeSpec, unixTimeSpec, uuidSpec,
+  SerializationOptions, SerializationOutputType, streamSpec, stringSpec, timeSpanSpec, TypeSpec, unixTimeSpec, uuidSpec,
 
   // Legacy
   BaseMapperType, CompositeMapper, DictionaryMapper, EnumMapper, Mapper, MapperConstraints, MapperType,
@@ -108,6 +111,6 @@ export {
   WebResource, RequestPrepareOptions, HttpMethods, ParameterValue, HttpOperationResponse, ServiceClient, Constants, RequestPipeline,
   ServiceClientCredentials, BaseFilter, LogFilter, ExponentialRetryPolicyFilter,
   SystemErrorRetryPolicyFilter, SigningFilter, MsRestUserAgentFilter, stripRequest, stripResponse, delay, executePromisesSequentially,
-  generateUuid, isValidUuid, encodeUri, RestError, RequestOptionsBase, RequestFunction, ServiceCallback, promiseToCallback,
+  generateUuid, isValidUuid, encodeUri, RestError, RequestFunction, ServiceCallback, promiseToCallback,
   promiseToServiceCallback, isStream, dispatchRequest, RedirectFilter, applyMixins, isNode, stringifyXML, prepareXMLRootList
 };
