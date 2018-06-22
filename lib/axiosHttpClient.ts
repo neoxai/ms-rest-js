@@ -4,7 +4,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import * as FormData from "form-data";
 import * as tough from "isomorphic-tough-cookie";
-import * as xml2js from "isomorphic-xml2js";
+import * as xml2js from "xml2js";
 import { HttpClient } from "./httpClient";
 import { HttpHeaders } from "./httpHeaders";
 import { HttpOperationResponse } from "./httpOperationResponse";
