@@ -37,6 +37,7 @@
     "@types/form-data": "^2.2.1",
     "@types/node": "^9.4.6",
     "@types/uuid": "^3.4.3",
+    "@types/xml2js": "^0.4.3",
     "axios": "^0.18.0",
     "form-data": "^2.3.2",
     "isomorphic-tough-cookie": "^0.0.1",
